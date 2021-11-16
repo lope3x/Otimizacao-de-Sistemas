@@ -66,8 +66,8 @@ function handleForm(event) {
     let form = document.getElementById("form")
     let divs = Array.prototype.slice.call(form.getElementsByTagName("div"))
     data = divs.map(element => getCakeDataFromDiv(element));
-    console.log(data)
-    findBestPack(1100)
+    let orcamento = document.getElementById("orcamento").value
+    findBestPack(orcamento)
 }
 
 
