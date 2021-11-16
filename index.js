@@ -37,7 +37,7 @@ function findBestPack(orcamento) {
         best[j]= Math.floor(choose/P[j]);
         choose-= best[j]*P[j];
     }
-    var out='<table><tr><td><b>Quantidade | </b></td><td><b>Bolo | </b></td><th>Custo por Unidade | </th><th>Valor de Venda por Unidade</th>';
+    var out='<br><table class="table table-dark"><thead><tr><th scope="col">Quantidade</th><th scope="col">Bolo</th><th scope="col">Custo por Unidade</th><th scope="col">Valor de Venda por Unidade</th></tr></thead>';
     var wgt= 0;
     var val= 0;
     for (var i= 0; i<best.length; i++) {
@@ -46,9 +46,9 @@ function findBestPack(orcamento) {
         wgt+= best[i]*data[i].custo;
         val+= best[i]*data[i].valor;
     }
-    out+= '</tr></table><br/>Total custo: '+wgt;
-    out+= '<br/>Total valor: '+val;
-    out+= '<br> Lucro Total: '+(val - wgt);
+    out+= '</tr></table><br/><div class="card"><div class="card-header">Resultados</div><div class="card-body">Total custo (R$): '+wgt;
+    out+= '<br/>Total valor (R$): '+val;
+    out+= '<br> Lucro Total (R$): '+(val - wgt)+'</div>';
     document.body.innerHTML+= out;
 }
 
@@ -79,10 +79,12 @@ function createInput(id, type, placeholder) {
     }
     input.id = id
     input.placeholder = placeholder
+    input.className = "form-control"
     return input
 }
 
 function createBoloItem() {
+    linebreak = document.createElement("br");
     let div = document.createElement("div")
     let idBolo = `Bolo${numberOfBolos}`
     div.id = idBolo
@@ -91,11 +93,14 @@ function createBoloItem() {
     let bolovalorInput = createInput("valor"+idBolo, "number", "Valor de Venda")
     let boloCostInput = createInput("custo"+idBolo, "number", "Custo de Produção")
     let boloQuntityInput = createInput("quantidade"+idBolo, "number", "Quantidade máxima")
-
+    
+    div.appendChild(boloNameInput)
     div.appendChild(boloNameInput)
     div.appendChild(bolovalorInput)
     div.appendChild(boloCostInput)
     div.appendChild(boloQuntityInput)
+    div.appendChild(linebreak);
+    div.appendChild(linebreak);
 
 
     numberOfBolos++;
@@ -111,6 +116,7 @@ function main(){
     let form = document.getElementById("form")
     form.insertBefore(createBoloItem(), document.getElementById("addCakeItem"))
     form.addEventListener('submit', handleForm);
+    form.prepend(document.createElement("br"))
     let orcamentoInput = createInput("orcamento", "number", "Orçamento")
     form.prepend(orcamentoInput)
 }
